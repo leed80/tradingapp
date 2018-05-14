@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <div id="welcome">
+                <h1>Hello</h1>
+
+                <h2>I am the stock finder page. Please select an exchange and I will analyz the stocks and show the current long trending stocks.</h2>
+            </div>
+
+
+            <form action="{{ path('stock_analyser') }}" method="POST">
+                <select name="exchange">
+                    {% for exchange in exchanges %}
+                        <option value="{{ exchange.id }}">{{ exchange.name }}</option>
+
+                    {% endfor %}
+                </select>
+                <input type="hidden" value="3" name="action">
+                <input type="submit" value="Analyse stocks for this exchange on Trading 212">
+
+            </form><br><br>
+            <form action="{{ path('stock_analyser') }}" method="POST">
+                <select name="exchange">
+                    {% for exchange in exchanges %}
+                        <option value="{{ exchange.id }}">{{ exchange.name }}</option>
+
+                    {% endfor %}
+                </select>
+                <input type="hidden" value="2" name="action">
+                <input type="submit" value="Go!!!!!!!!!!!!!!!">
+
+            </form>
+            <br>
+            <br>
+
+            <form action="{{ path('stock_analyser') }}" method="POST">
+                <input type="submit" value="Please just analyz every stock on every exchange">
+                <input type="hidden" value="1" name="action">
+
+            </form>
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}

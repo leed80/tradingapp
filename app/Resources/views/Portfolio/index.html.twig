@@ -1,0 +1,21 @@
+{% extends '../default/index.html.twig' %}
+
+<h1>Current open positions</h1>
+<table>
+    {% for header in table.header %}
+        <th>header</th>
+    {% endfor %}
+    {% for item in table.item %}
+        <tr>
+            <td>item.id</td>
+            <td>item.instrument</td>
+            <td>item.open</td>
+            <td>item.close</td>
+            <td>item.result</td>
+            <td>item.interest_rate</td>
+            <td>item.interest_paid</td>
+            <td>item.days_open</td>
+            <td>item.dividend</td>
+        </tr>
+    {% endfor %}
+</table>

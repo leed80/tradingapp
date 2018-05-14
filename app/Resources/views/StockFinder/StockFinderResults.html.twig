@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <div id="welcome">
+                <h1>Hello</h1>
+
+                <h2>I am the stock results page. </h2>
+
+                <h2>Oppertunities</h2>
+                {% for oppertunity in oppertunities %}
+                    <p>{{ oppertunity }}</p>
+                {% endfor %}
+
+                <h2>errors</h2>
+                {% for error in errors %}
+                     <p>{{ error }}</p>
+                {% endfor %}
+
+                <h2>Failed (not worth the risk)</h2>
+                {% for down in downs %}
+                    <p>{{ down }}</p>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
