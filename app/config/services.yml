@@ -39,16 +39,16 @@ services:
     #         $someArgument: 'some_value'
 
     AppBundle\Service\StockService:
-        arguments: ['@service_container', "@doctrine.orm.entity_manager"]
+        arguments: []
 
 
-    MarketDataService:
-        class: AppBundle\Service\MarketDataService
+    AlphaVantageService:
+        class: AppBundle\Service\AlphaVantageService
         public: true
-        arguments: ['@service_container']
+        arguments: [%alphavantage_apikey%, %alphavantage_apiurl%]
 
     TechnicalAnalysisService:
         class: AppBundle\Service\TechnicalAnalysisService
         public: true
-        arguments: ['@service_container']
+        arguments: []
 

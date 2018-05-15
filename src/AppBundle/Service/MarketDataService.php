@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: davidlee
- * Date: 15/05/2018
- * Time: 12:49
+ *  Abstract class for fetching market data
  */
 
 namespace AppBundle\Service;
@@ -11,5 +8,12 @@ namespace AppBundle\Service;
 
 class MarketDataService
 {
+    protected $apiKey;
+    protected $apiUrl;
+
+    function __construct()
+    {
+
+    }
 
 }
