@@ -8,6 +8,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Exchange;
+use AppBundle\Entity\Instrument;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +23,16 @@ use AppBundle\Service\StockService;
 class StockFinderController extends Controller
 {
 
+    public function getExchangeRepo()
+    {
+        return $this->getDoctrine()->getRepository(Exchange::class);
+    }
+
+    public function getInstrumentsRepo()
+    {
+        return $this->getDoctrine()->getRepository(Instrument::class);
+    }
+
     /**
      * @param Request $request
      * @param StockService $stockService
@@ -28,8 +40,8 @@ class StockFinderController extends Controller
      */
     public function exchangePickingController(Request $request, StockService $stockService)
     {
-        $exchanges = $stockService->getStockExchangeList();
-
+        $exchangesRepo = $this->getExchangeRepo();
+        $exchanges = $exchangesRepo->findAll();
 
         return $this->render('StockFinder/StockFinderOptions.html.twig', array(
             'exchanges' => $exchanges
@@ -53,12 +65,30 @@ class StockFinderController extends Controller
         $action = $request->get('action');
         $exchange = $request->get('exchange');
 
+        $exchangeRepo = $this->getExchangeRepo();
+        $exchange = $exchangeRepo->find($exchange);
+
+        $instrumentRepo = $this->getInstrumentsRepo();
+
+
         if($action == 1){
             $results = $stockService->analyzeAllExchanges();
         } elseif ($action == 2) {
+            $instruments = $instrumentRepo->findBy(
+                array(
+                    'exchangeId' => $exchange,
+                )
+            );
             $results = $stockService->analyzeExchange($exchange);
         } elseif ($action == 3){
-            $results = $stockService->analyzeExchange($exchange, 1)  ;      }
+            $instruments = $instrumentRepo->findBy(
+                array(
+                    'exchangeId' => $exchange,
+                    'trading212' => 1
+                )
+            );
+            $results = $stockService->analyzeExchange($exchange, $instruments);
+        }
 
 
         return $this->render('StockFinder/StockFinderResults.html.twig', array(

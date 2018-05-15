@@ -36,22 +36,13 @@ class StockService
 
     }
 
-    public function analyzeExchange($exchange, $trading212 = 0){
-
-        if($trading212 == 1){
-            $stockList = $this->getStockInstrumentListTrading212($exchange);
-        } else{
-            $stockList = $this->getStockInstrumentList($exchange);
-        }
-
-        $exchangeMapper = $this->entityManager->getRepository(Exchange::class);
-        $exchangeObject = $exchangeMapper->findOneByid($exchange);
+    public function analyzeExchange($exchangeObject, $instruments){
 
         $opportunities = array();
         $down = array();
         $error = array();
 
-        foreach($stockList as $instrument){
+        foreach($instruments as $instrument){
             $instrumentSymbol = $instrument->getName();
             $instrumentName = $instrument->getInstrumentName();
 
@@ -123,18 +114,6 @@ class StockService
         return $result;
     }
 
-    public function getStockInstrumentListTrading212($exchangeId)
-    {
-        // Get all the instruments for an exchange
-        $instrumentMapper = $this->entityManager->getRepository(Instrument::class);
-        $instruments = $instrumentMapper->findBy(
-            array(
-                'exchangeId' => $exchangeId,
-                'trading212' => 1
-            )
-        );
-        return $instruments;
-    }
 
     public function getStockInstrumentList($exchangeId)
     {
@@ -144,13 +123,5 @@ class StockService
         return $instruments;
     }
 
-    public function getStockExchangeList()
-    {
-        // Get all the exchanges
-        $exchangeMapper = $this->entityManager->getRepository(Exchange::class);
-        $exchanges = $exchangeMapper->findAll();
-        return $exchanges;
-
-    }
 
 }
