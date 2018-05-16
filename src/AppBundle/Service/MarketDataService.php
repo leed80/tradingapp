@@ -10,10 +10,18 @@ class MarketDataService
 {
     protected $apiKey;
     protected $apiUrl;
+    protected $httpRequestService;
 
-    function __construct()
+    public function getHttpRequestService()
     {
-
+        return $this->httpRequestService;
     }
+
+    public function getInstrumentData($url)
+    {
+        return $this->getHttpRequestService()->getResponse($url);
+    }
+
+
 
 }
